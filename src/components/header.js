@@ -6,6 +6,7 @@ class Header extends Component {
     return (
       <React.Fragment>
         <h1 className="top-header">Мега Рандомайзер команд  "ФОК - 4000"</h1>
+        <span>Beta версия, возможны баги =)</span>
         <h2 className="center-align sub-header">Специально для футболистов, которым нужно минимум 15 минут, чтобы поделиться</h2>
       </React.Fragment>
 

@@ -6,3 +6,12 @@
 .my-body {
   padding: 80px;
 }
+
+.center {
+  text-align: center;
+}
+
+.btn {
+  width: 200px;
+  margin-bottom: 20px;
+}

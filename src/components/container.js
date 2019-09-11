@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import AddPlayer from './addPlayer';
 import PlayerList from './playerList';
 import Team from './teams'
-import { Button } from 'antd'
-
+import { Button, Row, Col } from 'antd'
+import AddList from './addList/AddList'
 
 class Container extends Component {
   state = {
     list: [],
-    shareButtonType: 'disabled',
+    disabled: true,
     team1: [],
     team2: [],
     team3: []
@@ -24,11 +24,11 @@ class Container extends Component {
       })
       if (list.length === 10 || list.length === 15) {
         this.setState({
-          shareButtonType: 'primary'
+          disabled: false
         })
       } else {
         this.setState({
-          shareButtonType: 'disabled'
+          disabled: true
         })
       }
     } else {
@@ -36,8 +36,17 @@ class Container extends Component {
     }
   }
 
+  updateListfromTextarea = (value) => {
+    this.setState({
+      list: value
+    })
+  }
+
   randomize = () => {
-    const { list} = this.state;
+    if (this.getCookie('usedToday')) {
+      return alert('Ты уже поделил людей, давай играть честно)')
+    }
+    const { list } = this.state;
     let team1 = [];
     let team2 = [];
     let team3 = []
@@ -62,7 +71,7 @@ class Container extends Component {
         if (j < 5) {
           team1.push(teams[currentPlayer])
           teams.splice(currentPlayer, 1)
-        } else if ( j < 10) {
+        } else if (j < 10) {
           team2.push(teams[currentPlayer])
           teams.splice(currentPlayer, 1)
         } else {
@@ -76,28 +85,50 @@ class Container extends Component {
       team1: team1,
       team2: team2,
       team3: team3
+    }, () => {
+      if (this.state.team1.length > 2) {
+        //cookies
+        document.cookie = "usedToday=true; max-age=3600";
+      }
     })
   }
 
+  getCookie(name) {
+    let matches = document.cookie.match(new RegExp(
+      "(?:^|; )" + name.replace(/([.$?*|{}()[\]\\/+^])/g, '\\$1') + "=([^;]*)"
+    ));
+    return matches ? decodeURIComponent(matches[1]) : undefined;
+  }
+
+
   clearList = () => {
+    document.cookie = "usedToday=true; max-age=0";
     this.setState({
       list: []
     })
   }
-  
+
   render() {
     const { list, shareButtonType, team1, team2, team3 } = this.state
     return (
-      <React.Fragment>
-        <div className="container">
-          <AddPlayer updateData={this.updateData} updateList={this.updateList} />
-          <Button onClick={this.clearList} type='danger'>Очистить список</Button>
-          <Button onClick={this.randomize} type={shareButtonType}>Поделить</Button>
-          <PlayerList list={list} />
-        </div>
-        { this.state.team1.length > 1 && <Team team1={team1} team2={team2} team3={team3} />}
-      </React.Fragment>
-
+      <>
+        <Row>
+          <Col span={9}>
+            <h3>Добавить игроков вручную</h3>
+            <AddPlayer updateData={this.updateData} updateList={this.updateList} />
+          </Col>
+          <Col span={6}>
+            <PlayerList list={list} />
+            <Button className="btn" onClick={this.clearList} type='danger'>Очистить список</Button>
+            <Button className="btn" onClick={this.randomize} type={shareButtonType}>Поделить</Button>
+          </Col>
+          <Col span={9}>
+            <h3>Или вставить список</h3>
+            <AddList randomize={this.randomize} updateListfromTextarea={this.updateListfromTextarea} />
+          </Col>
+        </Row>
+        {this.state.team1.length > 1 && <Team team1={team1} team2={team2} team3={team3} />}
+      </>
     );
   }
 }

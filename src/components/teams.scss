@@ -1,3 +1,12 @@
+.teams-group {
+  display: flex;
+  flex-wrap: wrap
+}
+
+.team {
+  max-width: 300px;
+}
+
 .team1 {
   padding: 20px;
   background-color: rgb(238, 67, 67);
