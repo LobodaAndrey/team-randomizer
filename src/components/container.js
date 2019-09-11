@@ -43,9 +43,9 @@ class Container extends Component {
   }
 
   randomize = () => {
-    // if (this.getCookie('usedToday')) {
-    //   return alert('Ты уже поделил людей, давай играть честно)')
-    // }
+    if (this.getCookie('usedToday')) {
+      return alert('Ты уже поделил людей, давай играть честно)')
+    }
     const { list } = this.state;
     let team1 = [];
     let team2 = [];
