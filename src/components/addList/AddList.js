@@ -10,7 +10,9 @@ class AddList extends Component {
       [e.target.name]: e.target.value
     }, () => {
       let a = this.state.list.replace(/\d?\d./g, '')
-      .replace('.', '').trim().split('  ')
+      .replace('.', '')
+      .trim()
+      .split(' ')
       this.props.updateListfromTextarea(a)
     })
   }
