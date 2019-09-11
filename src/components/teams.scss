@@ -1,9 +1,11 @@
 .teams-group {
   display: flex;
-  flex-wrap: wrap
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .team {
+  width: 100%;
   max-width: 300px;
 }
 

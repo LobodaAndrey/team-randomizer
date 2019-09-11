@@ -1,6 +1,6 @@
-.wrapper {
-  max-width: 900px;
+.insert-list {
   margin: 0 auto;
+  margin-bottom: 20px;
 }
 
 .my-body {
@@ -14,4 +14,8 @@
 .btn {
   width: 200px;
   margin-bottom: 20px;
+}
+
+.container {
+  padding: 20px;
 }

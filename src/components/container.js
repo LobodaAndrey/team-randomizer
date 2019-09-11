@@ -43,9 +43,9 @@ class Container extends Component {
   }
 
   randomize = () => {
-    if (this.getCookie('usedToday')) {
-      return alert('Ты уже поделил людей, давай играть честно)')
-    }
+    // if (this.getCookie('usedToday')) {
+    //   return alert('Ты уже поделил людей, давай играть честно)')
+    // }
     const { list } = this.state;
     let team1 = [];
     let team2 = [];
@@ -89,6 +89,10 @@ class Container extends Component {
       if (this.state.team1.length > 2) {
         //cookies
         document.cookie = "usedToday=true; max-age=3600";
+        window.scrollTo({
+          top: document.body.scrollHeight,
+          behavior: "smooth"
+        });
       }
     })
   }
@@ -112,22 +116,24 @@ class Container extends Component {
     const { list, shareButtonType, team1, team2, team3 } = this.state
     return (
       <>
-        <Row>
-          <Col span={9}>
-            <h3>Добавить игроков вручную</h3>
-            <AddPlayer updateData={this.updateData} updateList={this.updateList} />
-          </Col>
-          <Col span={6}>
-            <PlayerList list={list} />
-            <Button className="btn" onClick={this.clearList} type='danger'>Очистить список</Button>
-            <Button className="btn" onClick={this.randomize} type={shareButtonType}>Поделить</Button>
-          </Col>
-          <Col span={9}>
-            <h3>Или вставить список</h3>
-            <AddList randomize={this.randomize} updateListfromTextarea={this.updateListfromTextarea} />
-          </Col>
-        </Row>
-        {this.state.team1.length > 1 && <Team team1={team1} team2={team2} team3={team3} />}
+        <div className="container">
+          <Row>
+            <Col xs={24} sm={{span: 6, offset: 3}}>
+              <h3>Вставить список</h3>
+              <AddList randomize={this.randomize} updateListfromTextarea={this.updateListfromTextarea} />
+            </Col>
+            <Col xs={24} sm={6}>
+              <Button className="btn" onClick={this.clearList} type='danger'>Очистить список</Button>
+              <Button className="btn" onClick={this.randomize} type={shareButtonType}>Поделить</Button>
+              <PlayerList list={list} />
+            </Col>
+            <Col xs={24} sm={{span: 6}}>
+              <h3>Или добавить игроков вручную</h3>
+              <AddPlayer updateData={this.updateData} updateList={this.updateList} />
+            </Col>
+          </Row>
+          {this.state.team1.length > 1 && <Team team1={team1} team2={team2} team3={team3} />}
+        </div>
       </>
     );
   }

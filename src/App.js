@@ -7,12 +7,12 @@ import Header from './components/header'
 class App extends Component {
   render() { 
     return (  
-      <React.Fragment>
+      <>
         <div className="wrapper">
           <Header />
           <Container className="my-body"/>  
         </div>
-      </React.Fragment>
+      </>
     );
   }
 }

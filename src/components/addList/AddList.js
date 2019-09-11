@@ -12,7 +12,7 @@ class AddList extends Component {
       let a = this.state.list.replace(/\d?\d./g, '')
       .replace('.', '')
       .trim()
-      .split(' ')
+      .split('\n')
       this.props.updateListfromTextarea(a)
     })
   }
@@ -20,7 +20,7 @@ class AddList extends Component {
   render() {
     return (
       <>
-        <textarea onChange={(e) => this.handleChange(e)} name="list" id="" cols="30" rows="10"></textarea>
+        <textarea className="insert-list" onChange={(e) => this.handleChange(e)} name="list" id="" cols="30" rows="10"></textarea>
       </>
     );
   }
