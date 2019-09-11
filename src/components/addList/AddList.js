@@ -9,7 +9,8 @@ class AddList extends Component {
     this.setState({
       [e.target.name]: e.target.value
     }, () => {
-      let a = this.state.list.replace(new RegExp("[0-9]?[0-9].", "g"), "").trim().split('  ')
+      let a = this.state.list.replace(/\d?\d./g, '')
+      .replace('.', '').trim().split('  ')
       this.props.updateListfromTextarea(a)
     })
   }
